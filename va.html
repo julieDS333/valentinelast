@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIFIED: ENEMY ID</title>
+    <style>
+        :root {
+            --bg-color: #000;
+            --hacker-green: #00ff41;
+            --pink-accent: #ff69b4;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--hacker-green);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            transition: background-color 0.8s ease;
+            text-align: center;
+        }
+
+        #container {
+            max-width: 800px;
+            padding: 40px;
+            z-index: 10;
+        }
+
+        h1 { font-size: 3.5rem; margin-bottom: 20px; text-transform: uppercase; }
+        p { font-size: 1.8rem; line-height: 1.5; font-weight: bold; }
+
+        .btn-group {
+            margin-top: 40px;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 20px 40px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 3px solid var(--hacker-green);
+            background: transparent;
+            color: var(--hacker-green);
+            text-transform: uppercase;
+        }
+
+        #deny-btn:hover { background: var(--hacker-green); color: #000; }
+
+        #lawyer-btn {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #444;
+            color: #444;
+        }
+
+        /* Final Reveal Styling */
+        .final-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 4px solid white;
+            padding: 50px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .shake { animation: shake 0.4s; }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-15px); }
+            50% { transform: translateX(15px); }
+            100% { transform: translateX(0); }
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 25px;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1 id="header">ENEMY IDENTIFICATION REQUIRED</h1>
+        <div id="ui-content">
+            <p id="text">
+                You are suspected of being my valentine.<br><br>
+                Please deny immediately.
+            </p>
+
+            <div class="btn-group">
+                <button id="deny-btn" onclick="processDenial()">I am NOT your valentine</button>
+                <button id="lawyer-btn" onclick="alert('ERROR: Legal counsel unavailable during active interrogation.')">Lawyer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let clicks = 0;
+        let intensity = 0;
+        const responses = [
+            "LIE DETECTED 🚨",
+            "You’ve barely known each other. Relax.",
+            "This denial is getting emotional.",
+            "Yeah okay this interrogation is compromised."
+        ];
+
+        function processDenial() {
+            const btn = document.getElementById('deny-btn');
+            const txt = document.getElementById('text');
+            
+            btn.classList.add('shake');
+            setTimeout(() => btn.classList.remove('shake'), 400);
+
+            if (clicks < responses.length) {
+                txt.innerHTML = `<span style="color:white; background:red; padding:5px;">${responses[clicks]}</span>`;
+                clicks++;
+                intensity += 60;
+                document.body.style.backgroundColor = `rgb(${intensity}, 0, ${intensity/2})`;
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            const container = document.getElementById('container');
+            document.body.style.backgroundColor = "#ff69b4";
+            
+            container.innerHTML = `
+                <div class="final-box">
+                    <h1 style="font-size: 2.5rem; margin-top:0;">INTERROGATION FAILED</h1>
+                    <p>Despite the very reasonable amount of time we’ve been seeing each other, you are clearly my valentine.</p>
+                </div>
+            `;
+
+            for(let i = 0; i < 100; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.innerHTML = '✨';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.top = Math.random() * 100 + 'vh';
+                s.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(s);
+            }
+        }
+    </script>
+</body>
+</html>
